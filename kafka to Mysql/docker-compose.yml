@@ -165,3 +165,11 @@ services:
       - zookeeper
       - broker
       - kafka-connect
+
+#  producer:
+#    build: ./news_producer
+#    container_name: producer
+#    depends_on:
+#      - zookeeper
+#      - broker
+#      - myconnector

@@ -10,7 +10,7 @@ from threading import Thread
 from time import time
 from time import sleep
 
-KAFKA_BROKER = 'broker:9092'
+KAFKA_BROKER = 'localhost:9092'
 KAFKA_TOPIC = 'news'
 
 try:
