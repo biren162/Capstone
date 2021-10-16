@@ -10,7 +10,7 @@ from threading import Thread
 from time import time
 from time import sleep
 
-KAFKA_BROKER = 'localhost:9092'
+KAFKA_BROKER = 'kafka:9092'
 KAFKA_TOPIC = 'news'
 
 try:
@@ -70,9 +70,9 @@ def sendData(source):
                     data = response.json().get('articles')
                     for d in data:
                         if d['topic']=='news' :
-                            d = {'title':d['title'],'date':d['published_date'],'summary':d['summary'],'category':key,'source':d['clean_url']}
+                            d = {'title':d['title'],'date':str(d['published_date']),'summary':d['summary'],'category':key,'source':d['clean_url']}
                         else :
-                            d = {'title':d['title'],'date':d['published_date'],'summary':d['summary'],'category':d['topic'],'source':d['clean_url']}
+                            d = {'title':d['title'],'date':str(d['published_date']),'summary':d['summary'],'category':d['topic'],'source':d['clean_url']}
                         try:
                             print("sending...", str(d))
                         except Exception as e:
@@ -90,7 +90,7 @@ def sendData(source):
                 data.append(json.loads(dic) )
 
         for d in data:
-            d = {'title':d['headline'],'date':d['date'],'summary':d['short_description'],'category':d['category'],'source':d['link']}
+            d = {'title':d['headline'],'date':str(d['date']),'summary':d['short_description'],'category':d['category'],'source':d['link']}
             try:
                 print("sending...", str(d))
             except Exception as e:
