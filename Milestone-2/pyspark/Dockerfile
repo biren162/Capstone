@@ -60,6 +60,10 @@ COPY ./requirements.txt ./
 #RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 #RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1 
 #RUN sudo update-alternatives  --set python /usr/bin/python3.7
+RUN sudo apt-get autoclean
+RUN sudo apt-get autoremove
+RUN sudo apt-get clean
+RUN sudo apt-get update
 RUN set -xe \
     && apt-get update -y \
     && apt-get install python3-pip -y

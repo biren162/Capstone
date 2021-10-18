@@ -1,1 +1,5 @@
 pyspark==2.4.6
+numpy
+pandas
+sklearn
+nltk
