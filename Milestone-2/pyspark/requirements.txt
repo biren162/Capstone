@@ -1,4 +1,4 @@
-pyspark==2.4.6
+pyspark
 numpy
 pandas
 sklearn

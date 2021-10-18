@@ -34,6 +34,15 @@ services:
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
 
+  spark-worker-1:
+    image: bde2020/spark-worker:3.1.1-hadoop3.2
+    depends_on:
+      - spark-master
+    ports:
+      - "8083:8081"
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+
   producer:
     build: ./kafka_to_MongoDb/.
     environment: 
@@ -52,13 +61,17 @@ services:
       - spark-master
       - kafka
       - producer
-      - mongodb  
+      - mongodb
 
   preprocessor:
     build: ./pyspark/.
-    hostname: pyspark
-    links:
-      - mongodb:mongodb
+    command: "spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 --master spark://spark-worker-1:8083 news_preprocessor.py"
+    depends_on:
+      - spark-master
+      - kafka
+      - producer
+      - consumer
+      - mongodb
 
   mongodb:
     image: mongo

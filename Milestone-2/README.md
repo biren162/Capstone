@@ -1,16 +1,16 @@
-Terminal-1:
+## Terminal-1:
 
-docker-compose up --build
+Step-1> Build and start Container
 
-In browser open localhost:8082
-Verify contents of news_collection under news DB
+* docker-compose up --build
 
-Terminal-2:
-
-docker-compose run preprocessor bash
-
-cd python
-
-spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.11:2.3.5 ./news_preprocessor.py
+* To verify contents of news_collection under news DB, open localhost:8082 in browser.
 
 
+## Terminal-2:
+
+Step-2> To copy preprocessor pipeline
+
+* docker cp milestone-2_preprocessor_1:/app/preprocessor ./models/.
+
+* To verify the cleaned data, check preprocessor logs using "docker logs milestone-2_preprocessor_1"
