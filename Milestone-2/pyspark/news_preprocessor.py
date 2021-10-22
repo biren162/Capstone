@@ -53,7 +53,7 @@ preprocessor = PipelineModel.load("preprocessor")
 
 #cleaned_df = preprocessorPipelineFit.transform(df)
 # let's train on few records only
-# df = df.limit(100)
+df = df.limit(100)
 cleaned_df = preprocessor.transform(df)
 
 print('Data cleansing done!!')
