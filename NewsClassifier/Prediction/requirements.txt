@@ -1,0 +1,13 @@
+fastapi==0.63.0
+uvicorn==0.13.3
+pytest==6.2.4
+requests==2.25.1
+python-multipart
+aiofiles
+jinja2
+pandas==1.2.4
+scikit-learn==0.24.1
+tensorflow==2.0.0
+h5py==2.10.0
+numpy==1.19.5
+bert-for-tf2==0.14.9

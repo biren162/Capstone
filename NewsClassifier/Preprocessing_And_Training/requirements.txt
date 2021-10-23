@@ -1,0 +1,6 @@
+pyspark
+numpy
+pandas
+sklearn
+nltk
+mlflow

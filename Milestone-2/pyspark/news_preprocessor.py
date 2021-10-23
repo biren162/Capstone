@@ -13,6 +13,12 @@ import numpy
 import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
+# from pyspark.ml.classification import LogisticRegression
+from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+from pyspark.ml.classification import MultilayerPerceptronClassifier
+from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
+
 
 sleep(70)
 
@@ -43,24 +49,21 @@ stopwordsRemover = StopWordsRemover(inputCol="words", outputCol="filtered_data")
 hashingTF = HashingTF(inputCol="filtered_data", outputCol="tf", numFeatures=10000)
 idf = IDF(inputCol="tf", outputCol="idf", minDocFreq=5)
 labelAnnotator = StringIndexer(inputCol = "category", outputCol = "label")
-assembler = VectorAssembler(inputCols=['tf','idf'], outputCol='features')
-preprocessorPipeline = Pipeline(stages=[tokenizer, stopwordsRemover, hashingTF, idf, labelAnnotator, assembler])
+preprocessorPipeline = Pipeline(stages=[tokenizer, stopwordsRemover, hashingTF, idf, labelAnnotator])
 preprocessorPipelineFit = preprocessorPipeline.fit(df)
 
 preprocessorPipelineFit.save('preprocessor')
 
 preprocessor = PipelineModel.load("preprocessor")
 
-#cleaned_df = preprocessorPipelineFit.transform(df)
-# let's train on few records only
-df = df.limit(100)
+# cleaned_df = preprocessorPipelineFit.transform(df)
 cleaned_df = preprocessor.transform(df)
 
 print('Data cleansing done!!')
 
 print('Columns after data cleansing: ',cleaned_df.columns)
 
-# cleaned_df = cleaned_df['summary', 'category', 'tf', 'idf', 'label']
+cleaned_df = cleaned_df['summary', 'category', 'tf', 'idf', 'label']
 
 print('Schema after data cleansing')
 cleaned_df.printSchema()
@@ -68,69 +71,5 @@ print(cleaned_df.show(5))
 
 print("Done")
 
-#Data Partition
-
-(trainingData, testData) = cleaned_df.randomSplit([0.7, 0.3], seed = 100)
-
-
-rf = RandomForestClassifier(labelCol='label',
-                            featuresCol='features')
-print('========================stating the training....=========== #records:',df.count())
-lrModel = rf.fit(trainingData)
-predictions = lrModel.transform(testData)
-
-evaluator = MulticlassClassificationEvaluator(predictionCol="prediction")
-print('accuracy------------------------------------------------------------------:',evaluator.evaluate(predictions))
-
-print('response----------------------------------------------------------:')
-print(predictions.filter(predictions['prediction'] == 0) \
-    .select("summary","category","probability","label","prediction") \
-    .orderBy("probability", ascending=False) \
-    .show(n = 10, truncate = 30))
 sys.exit(0)
 
-
-
-# import sparknlp
-#
-# spark = sparknlp.start()
-#
-# from sparknlp.base import *
-# from sparknlp.annotator import *
-#
-#
-# documentAssembler = DocumentAssembler()\
-#     .setInputCol("summary")\
-#     .setOutputCol("document")
-#
-# print('finally spark nlp is working...')
-#
-# documentAssembler = DocumentAssembler()\
-#     .setInputCol("summary")\
-#     .setOutputCol("document")
-#
-# tokenizer = Tokenizer() \
-#     .setInputCols(["document"]) \
-#     .setOutputCol("token")
-#
-# stemmer = Stemmer() \
-#     .setInputCols(["token"]) \
-#     .setOutputCol("stem")
-#
-# bert_embeddings = BertEmbeddings.pretrained('bert_base_uncased')\
-#           .setInputCols(["document", "token"])\
-#           .setOutputCol("embeddings")
-#
-# nlpPipeline = Pipeline(stages=[
-#     documentAssembler,
-#     tokenizer,
-#     bert_embeddings
-#  ])
-#
-# empty_df = spark.createDataFrame([['']]).toDF("text")
-#
-# pipelineModel = nlpPipeline.fit(empty_df)
-#
-# result = pipelineModel.transform(df.limit(10))
-#
-# print(result.show(5))

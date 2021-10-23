@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>News Classifier</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="icon" href="../static/logo2.png" type="image/gif" sizes="16x16">
+	<link rel="stylesheet" href="../static/style.css" type="text/css">
+</head>
+<body>
+	<div class="container">
+		<header>
+			<a href="/" class="home-link" title="News Classifier">
+				<img src="../static/logo2.png" alt="News Classifier" height="50"/>
+			</a>
+			<h6 class="h4 mb-0">News Classifier</h6>
+		</header>
+		<a class="d-inline-flex align-items-center mt-3 text-dark btn p-0" title="go to home page" href="/">
+			<svg xmlns="http://www.w3.org/2000/svg" class="mr-2" viewBox="0 0 512 512" height="24" width="24">
+			   <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M244 400L100 256l144-144M120 256h292"></path>
+			</svg>
+			Go To Home Page
+		 </a>
+		<div class="my-3">
+			<h6>Enter the below feilds to <span class="font-weight-bold">predict the news category.</span></h6>
+			<small class="text-danger small-text">* All feilds are mandatory</small>
+			<form id="predictionForm" method="POST" action="/predictNews" class="mt-2">
+				<div class="">
+					<div class="d-flex align-items-center justify-content-between">
+						<!-- <div class="form-group w-100">
+							<label for="age">Age in years<sup class="text-danger">*</sup></label>
+							<input type="number" class="form-control" id="age" name="age" placeholder="00 yrs" required max="100" min="18">
+						</div> -->
+						<div class="form-group w-100 mx-3">
+							<label for="summary">PLease enter news text<sup class="text-danger">*</sup></label>
+							<input type="text"  class="form-control" id="summary" name="summary" placeholder="Narendra modi resigned." required>
+						</div>
+					<!-- 	<div class="form-group w-100">
+							<label for="repayDuration">Months needed to <sup class="text-danger">*</sup></label>
+							<input type="number" class="form-control" id="repayDuration" name="repayDuration" placeholder="00" required>
+						</div> -->
+					</div>
+					
+				</div>
+				<div class="d-flex align-items-center mt-4">
+				<button class="btn btn-primary" type="submit" title="Predict" >Predict</button>
+				{{prediction | safe}}
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
