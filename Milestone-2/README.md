@@ -14,3 +14,11 @@ Step-2> To copy preprocessor pipeline
 * docker cp milestone-2_preprocessor_1:/app/preprocessor ./models/.
 
 * To verify the cleaned data, check preprocessor logs using "docker logs milestone-2_preprocessor_1"
+
+
+# Steps to run notebook in local
+open anaconda prompt
+type pyspark
+
+# UI: 
+localhost:8888   (windows)
