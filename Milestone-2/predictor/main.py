@@ -8,6 +8,7 @@ from fastapi.templating import Jinja2Templates
 from starlette import requests
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+import numpy as np
 # defining the main app
 app = FastAPI(title="Credit Risk assessment", docs_url="/docs")
 # app = FastAPI()
@@ -39,8 +40,6 @@ def load_Home(request: Request):
     return templates.TemplateResponse("predict.html", {"request": request})
 
 
-
-
 @app.post("/predictNews", status_code=200)
 # Route to do the prediction using the ML model defined.
 # Payload: QueryIn containing the parameters
@@ -51,18 +50,9 @@ def predict_risk(
     """ name = request.form['name'] """
     """  print(request) """
     print('news text:',creditAmount)
-    # query_data = QueryIn(
-    # status = checkingAccountStatus,
-    # purpose = loanPurpose,
-    # credit_amount = int(creditAmount),
-    # Duration = repayDuration,
-    # employment = employmentSince,
-    # history = creditHistory,
-    # saving_account = savingBonds,
-    # property = property,
-    # age = age)
-
     # risk = predict(query_data)
+
+
 
     message = creditAmount
     color = "alert-success" 
