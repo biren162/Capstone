@@ -22,3 +22,6 @@ type pyspark
 
 # UI: 
 localhost:8888   (windows)
+
+# Model training:
+ run notebook final_news_classification_bert.ipynb
