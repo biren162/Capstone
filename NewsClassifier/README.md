@@ -9,23 +9,19 @@ Step-1> Build and start Container
 
 ## Terminal-2:
 
-Step-2> To copy preprocessor pipeline
+Step-2> To copy preprocessor pipeline to local registery
 
 * docker cp milestone-2_preprocessor_1:/app/preprocessor ./models/.
 
-* To verify the cleaned data, check preprocessor logs using "docker logs milestone-2_preprocessor_1"
+* To verify the cleaned data, check preprocessor logs using "docker logs newsclassifier_preprocessor_trainer_1"
 
+## Model training:
+* run notebook news_classification_bert.ipynb
 
-# Steps to run notebook in local
-open anaconda prompt
-type pyspark
+## UI: 
+localhost:8888
 
-# UI: 
-localhost:8888   (windows)
-
-# Model training:
- run notebook final_news_classification_bert.ipynb
-
-# Model prediction:
+## News Category prediction:
   	- Update docker memory resource allocation = 4 GB
   	- Prediction service takes few seconds to give output
+  	- Open localhost:8888 in browser, enter news summary and wait for sometime to get predicted news category.
