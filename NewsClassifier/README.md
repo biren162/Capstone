@@ -23,5 +23,5 @@ localhost:8888
 
 ## News Category prediction:
   	- Update docker memory resource allocation = 4 GB
-  	- Prediction service takes few seconds to give output
-  	- Open localhost:8888 in browser, enter news summary and wait for sometime to get predicted news category.
+  	- Wait for prediction service startup to complete (docker-compose logs --follow predictor)
+  	- Open localhost:8888 in browser, enter news summary and wait for some seconds to get predicted news category.
