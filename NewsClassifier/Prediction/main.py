@@ -2,7 +2,7 @@ import uvicorn
 from pydantic import BaseModel
 from ml_utils import predict, init_app
 from typing import List
-from datetime import  datetime
+from datetime import datetime
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from starlette import requests
@@ -20,6 +20,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_event_handler("startup", init_app)
 
 # class which is expected in the payload
+
+
 class QueryIn(BaseModel):
     summary: int
 
@@ -35,6 +37,7 @@ class QueryOut(BaseModel):
 def ping():
     return {"ping": "pong"}
 
+
 @app.get("/")
 def load_Home(request: Request):
     return templates.TemplateResponse("predict.html", {"request": request})
@@ -45,22 +48,21 @@ def load_Home(request: Request):
 # Payload: QueryIn containing the parameters
 # Response: QueryOut containing the news_class predicted (200)
 def predict_news(
-                request: Request,
-                summary: str = Form(...)):
+        request: Request,
+        summary: str = Form(...)):
     """ name = request.form['name'] """
     """  print(request) """
-    print('news text:',summary)
+    print('news text:', summary)
     news_class = predict(summary)
 
     message = news_class
-    color = "alert-success" 
-    response_template ='<div class="'+color+' mb-0 py-1 ml-3 alert" style="font-weight:500" ' \
-                      'role="alert">'+message+'</div>'
+    color = "alert-success"
+    response_template = '<div class="'+color+' mb-0 py-1 ml-3 alert" style="font-weight:500" ' \
+        'role="alert">'+message+'</div>'
     return templates.TemplateResponse("predict.html", {
         "request": request,
         "prediction": response_template
     })
-
 
 
 # Main function to start the app when main.py is called
