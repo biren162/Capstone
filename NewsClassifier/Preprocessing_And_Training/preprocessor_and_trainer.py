@@ -55,9 +55,9 @@ preprocessorPipeline = Pipeline(
     stages=[tokenizer, stopwordsRemover, hashingTF, idf, labelAnnotator, assembler])
 preprocessorPipelineFit = preprocessorPipeline.fit(df)
 
-# preprocessorPipelineFit.save('preprocessor')
+preprocessorPipelineFit.save('preprocessor')
 
-# preprocessor = PipelineModel.load("preprocessor")
+preprocessor = PipelineModel.load("preprocessor")
 
 # let's train on few records only
 df = df.limit(100)
